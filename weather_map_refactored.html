@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather Map</title>
+  <script src="js/keys.js"></script>
+  <script src="js/jquery-3.x-git.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet' />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="js/mapbox-geocoder-utils.js"></script>
+  <link rel="stylesheet" href="css/weather_map_refactor.css">
+</head>
+<body>
+  <header class="mb-3">
+    <h3 class="ms-2">Weather App</h3>
+    <input type="text" class="my-auto me-2" id="current-city" autocomplete="off">
+  </header>
+
+  <main>
+    <div class="dnModal2">
+      <div id="input-container" class="dnModal-content2"><input type="text" name="search-input" id="search-input" autocomplete="off"></div>
+    </div>
+    <button class="dnModal-button" id="m-current-city">
+      Weather Forecast
+    </button>
+    <div class="dnModal">
+      <div id="Dropdown" class="dnModal-content">
+        <span class="dnModal-close">&times;</span>
+
+        <section class="carousel" aria-label="Gallery">
+          <ol class="carousel__viewport">
+            <li id="carousel__slide1"
+                tabindex="0"
+                class="carousel__slide">
+              <div class="card" id="c-forecast-day-one">
+                <div class="card-header text-center" id="date-1c">
+                  Featured
+                </div>
+                <div class="card-body d-flex flex-column justify-content-center text-center " id="hi-low1c"></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="day1c-description">A second item</li>
+                  <li class="list-group-item" id="day1c-humidity">A second item</li>
+                  <li class="list-group-item" id="day1c-wind">A second item</li>
+                  <li class="list-group-item" id="day1c-pressure">A third item</li>
+                </ul>
+              </div>
+              <div class="carousel__snapper"></div>
+            </li>
+
+            <li id="carousel__slide2"
+                tabindex="0"
+                class="carousel__slide">
+              <div class="card" id="slide-2 c-forecast-day-two">
+                <div class="card-header text-center" id="date-2c">
+                  Featured
+                </div>
+                <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low2c"></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="day2c-description">An item</li>
+                  <li class="list-group-item" id="day2c-humidity">An item</li>
+                  <li class="list-group-item" id="day2c-wind">An item</li>
+                  <li class="list-group-item" id="day2c-pressure">A second item</li>
+                </ul>
+              </div>
+              <div class="carousel__snapper"></div>
+            </li>
+
+            <li id="carousel__slide3"
+                tabindex="0"
+                class="carousel__slide">
+              <div class="card" id="slide-3 c-forecast-day-three">
+                <div class="card-header text-center" id="date-3c">
+                  Featured
+                </div>
+                <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low3c"></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="day3c-description">An item</li>
+                  <li class="list-group-item" id="day3c-humidity">An item</li>
+                  <li class="list-group-item" id="day3c-wind">An item</li>
+                  <li class="list-group-item" id="day3c-pressure">A second item</li>
+                </ul>
+              </div>
+              <div class="carousel__snapper"></div>
+            </li>
+
+            <li id="carousel__slide4"
+                tabindex="0"
+                class="carousel__slide">
+              <div class="card" id="slide-4 c-forecast-day-four">
+                <div class="card-header text-center" id="date-4c">
+                  Featured
+                </div>
+                <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low4c"></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="day4c-description">An item</li>
+                  <li class="list-group-item" id="day4c-humidity">An item</li>
+                  <li class="list-group-item" id="day4c-wind">An item</li>
+                  <li class="list-group-item" id="day4c-pressure">A second item</li>
+                </ul>
+              </div>
+              <div class="carousel__snapper"></div>
+            </li>
+
+            <li id="carousel__slide5" tabindex="0" class="carousel__slide">
+              <div class="card" id="slide-5 c-forecast-day-five">
+                <div class="card-header text-center" id="date-5c">
+                  Featured
+                </div>
+                <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low5c"></div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" id="day5c-description">An item</li>
+                  <li class="list-group-item" id="day5c-humidity">An item</li>
+                  <li class="list-group-item" id="day5c-wind">An item</li>
+                  <li class="list-group-item" id="day5c-pressure">A second item</li>
+                </ul>
+              </div>
+              <div class="carousel__snapper"></div>
+            </li>
+          </ol>
+
+
+          <aside class="carousel__navigation">
+            <ol class="carousel__navigation-list">
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide1"
+                   class="carousel__navigation-button">Go to slide 1</a>
+              </li>
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide2"
+                   class="carousel__navigation-button">Go to slide 2</a>
+              </li>
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide3"
+                   class="carousel__navigation-button">Go to slide 3</a>
+              </li>
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide4"
+                   class="carousel__navigation-button">Go to slide 4</a>
+              </li>
+              <li class="carousel__navigation-item">
+                <a href="#carousel__slide5"
+                   class="carousel__navigation-button">Go to slide 5</a>
+              </li>
+            </ol>
+          </aside>
+        </section>
+      </div><!--modal content end, line 37 start-->
+    </div> <!--modal end, line 36 start-->
+
+
+
+
+    <section class="mb-3 d-flex justify-content-around" id="five-day-forecast">
+      <div class="card mx-2" id="forecast-day-one" style="width: 18rem;">
+        <div class="card-header text-center" id="date-1">
+          Featured
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low1"></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="day1-description">A second item</li>
+          <li class="list-group-item" id="day1-humidity">A second item</li>
+          <li class="list-group-item" id="day1-wind">A second item</li>
+          <li class="list-group-item" id="day1-pressure">A third item</li>
+        </ul>
+      </div>
+
+
+      <div class="card mx-2" id="forecast-day-two" style="width: 18rem;">
+        <div class="card-header text-center" id="date-2">
+          Featured
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low2"></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="day2-description">An item</li>
+          <li class="list-group-item" id="day2-humidity">An item</li>
+          <li class="list-group-item" id="day2-wind">An item</li>
+          <li class="list-group-item" id="day2-pressure">A second item</li>
+        </ul>
+      </div>
+
+
+      <div class="card mx-2 vh-50" id="forecast-day-three" style="width: 18rem;">
+        <div class="card-header text-center" id="date-3">
+          Featured
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low3"></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="day3-description">An item</li>
+          <li class="list-group-item" id="day3-humidity">An item</li>
+          <li class="list-group-item" id="day3-wind">An item</li>
+          <li class="list-group-item" id="day3-pressure">A second item</li>
+        </ul>
+      </div>
+
+
+      <div class="card mx-2" id="forecast-day-four" style="width: 18rem;">
+        <div class="card-header text-center" id="date-4">
+          Featured
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low4"></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="day4-description">An item</li>
+          <li class="list-group-item" id="day4-humidity">An item</li>
+          <li class="list-group-item" id="day4-wind">An item</li>
+          <li class="list-group-item" id="day4-pressure">A second item</li>
+        </ul>
+      </div>
+
+
+      <div class="card mx-2" id="forecast-day-five" style="width: 18rem;">
+        <div class="card-header text-center" id="date-5">
+          Featured
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center text-center" id="hi-low5"></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" id="day5-description">An item</li>
+          <li class="list-group-item" id="day5-humidity">An item</li>
+          <li class="list-group-item" id="day5-wind">An item</li>
+          <li class="list-group-item" id="day5-pressure">A second item</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="justify-content-center d-flex" id="map-section">
+      <div id='map'></div>
+    </section>
+
+
+    <section id="search-bar">
+      <label for="search-input" id="search-bar-label" class="dnModal-button2">Check Another Location: </label>
+    </section>
+
+
+  </main>
+  <script src="js/weather_map_refactored.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
