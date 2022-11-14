@@ -100,7 +100,11 @@ $(function (){
                     console.log(reverseResults);
                     let resultantArray = reverseResults.split(', ');
                     let regexNumberCheck = / \d/;
-                    stateNameUSA = String(String(reverseResults.split(', ')[2]).split(regexNumberCheck)[0]);
+                    if (resultantArray.indexOf(data.city.name) === -1) {
+                        stateNameUSA = String(String(reverseResults.split(', ')[resultantArray.findIndex(value => /[a-z|A-Z]\s\d/.test(value))]).split(regexNumberCheck)[0]);
+                    } else {
+                        stateNameUSA = String(String(reverseResults.split(', ')[resultantArray.indexOf(data.city.name) + 1]).split(regexNumberCheck)[0]);
+                    }
                     if (data.city.country === 'US') {
                         $('#m-current-city').text(`${data.city.name}, ${stateNameUSA}, USA`).val('');
                         $('#current-city').attr('placeholder', `${data.city.name}, ${stateNameUSA}, USA`).val('');
