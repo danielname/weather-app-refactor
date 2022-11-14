@@ -101,7 +101,7 @@ $(function (){
                     let resultantArray = reverseResults.split(', ');
                     let regexNumberCheck = / \d/;
                     if (resultantArray.indexOf(data.city.name) === -1) {
-                        stateNameUSA = String(String(reverseResults.split(', ')[resultantArray.findIndex(value => /[a-z|A-Z]\s\d/.test(value))]).split(regexNumberCheck)[0]);
+                        stateNameUSA = String(String(reverseResults.split(', ')[resultantArray.findIndex(value => /[a-z|A-Z]{3}\s\d{5}$/.test(value))]).split(regexNumberCheck)[0]);
                     } else {
                         stateNameUSA = String(String(reverseResults.split(', ')[resultantArray.indexOf(data.city.name) + 1]).split(regexNumberCheck)[0]);
                     }
