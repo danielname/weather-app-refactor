@@ -97,7 +97,10 @@ $(function (){
                 loop()
 
                 reverseGeocode({lat: Defaults.lat, lng: Defaults.lng}, WEATHER_MAP_TOKEN).then(function(reverseResults){
-                    stateNameUSA = String(String(reverseResults.split(', ')[2]).split(' ')[0]);
+                    console.log(reverseResults);
+                    let resultantArray = reverseResults.split(', ');
+                    let regexNumberCheck = / \d/;
+                    stateNameUSA = String(String(reverseResults.split(', ')[2]).split(regexNumberCheck)[0]);
                     if (data.city.country === 'US') {
                         $('#m-current-city').text(`${data.city.name}, ${stateNameUSA}, USA`).val('');
                         $('#current-city').attr('placeholder', `${data.city.name}, ${stateNameUSA}, USA`).val('');
