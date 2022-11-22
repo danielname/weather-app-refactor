@@ -210,11 +210,5 @@ $(function (){
         }
     }
 
-    // When the user clicks the current city on desktop, it replaces the location with a searchbar that lets you change the city
-    // I think i should attempt to use display to show and hide the two sections.
-
-    // $('#current-city').on('click',function(){
-    //     $(this).html('<div id="input-container"><input type="text" name="search-input" id="search-input"></div>')
-    // })
 
 });
